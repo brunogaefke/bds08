@@ -1,14 +1,23 @@
+import Select from 'react-select';
 import './styles.css';
 
 function Filter() {
+  const options = [
+    { value: 'chocolate', label: 'Chocolate' },
+    { value: 'strawberry', label: 'Strawberry' },
+    { value: 'vanilla', label: 'Vanilla' },
+  ];
+
   return (
     <div className="filter-container base-card">
-      <select className="filter-input">
-        <option>Selecione um gênero</option>
-        <option value="MALE">Masculino</option>
-        <option value="FEMALE">Feminino</option>
-        <option value="OTHER">Outro</option>
-      </select>
+      <div className="filter-input">
+        <Select
+          options={options}
+          classNamePrefix="filter-input-select"
+          placeholder="Selecione a loja"
+          isMulti
+        />
+      </div>
     </div>
   );
 }
