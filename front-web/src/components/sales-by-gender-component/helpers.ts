@@ -1,4 +1,5 @@
 import { ApexOptions } from 'apexcharts';
+import { SalesByGender } from '../../types';
 
 export const buildPieChartConfig = (labels: string[] = [], name: string) => {
   return {
@@ -12,8 +13,8 @@ export const buildPieChartConfig = (labels: string[] = [], name: string) => {
       style: {
         color: '#FFF',
         fontSize: '18px',
-        fontFamily: 'Roboto, sans-serif',
-      },
+        fontFamily: 'Roboto, sans-serif'
+      }
     },
     legend: {
       show: true,
@@ -21,17 +22,17 @@ export const buildPieChartConfig = (labels: string[] = [], name: string) => {
       position: 'bottom',
       offsetY: 0,
       labels: {
-        colors: ['#b4bed2'],
+        colors: ['#b4bed2']
       },
       fontFamily: 'Roboto, sans-serif',
       fontSize: '18px',
       itemMargin: {
         vertical: 5,
-        horizontal: 0,
-      },
+        horizontal: 0
+      }
     },
     dataLabels: {
-      enabled: false,
+      enabled: false
     },
     plotOptions: {
       pie: {
@@ -45,7 +46,7 @@ export const buildPieChartConfig = (labels: string[] = [], name: string) => {
               offsetY: 10,
               formatter: function () {
                 return name;
-              },
+              }
             },
             total: {
               show: true,
@@ -55,14 +56,20 @@ export const buildPieChartConfig = (labels: string[] = [], name: string) => {
               fontFamily: 'Roboto, sans-serif',
               formatter: function () {
                 return '';
-              },
-            },
-          },
-        },
-      },
+              }
+            }
+          }
+        }
+      }
     },
     chart: {
-      height: '400px',
-    },
+      height: '400px'
+    }
   } as ApexOptions;
+};
+
+export const sumSalesByGender = (salesByGender: SalesByGender[] = []) => {
+  return salesByGender.reduce((previousValue, currentValue) => {
+    return previousValue + currentValue.sum;
+  }, 0);
 };

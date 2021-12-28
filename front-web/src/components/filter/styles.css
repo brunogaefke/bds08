@@ -22,7 +22,7 @@
 }
 
 .filter-input-select__indicator-separator {
-  display: none;
+  display: none !important;
 }
 
 @media (min-width: 576px) {
