@@ -7,11 +7,12 @@ type Props = {
 };
 
 function Filter({ onFilterChange }: Props) {
-  const [stores, setStore] = useState<Stores[]>([]);
+  const [stores, setStore] = useState<Stores>();
 
-  const onChangeStore = (store: Stores[]) => {
-    setStore(store);
-    onFilterChange({ store });
+  const onChangeStore = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedStore = event.target.value as Stores;
+    setStore(selectedStore);
+    onFilterChange({ store: selectedStore });
   };
 
   return (
