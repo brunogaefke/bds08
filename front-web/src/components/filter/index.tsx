@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import Select from 'react-select';
 import { FilterData, Stores } from '../../types';
+import { makeRequest } from '../../utils/request';
 import './styles.css';
 
 type Props = {
@@ -9,23 +11,35 @@ type Props = {
 function Filter({ onFilterChange }: Props) {
   const [stores, setStore] = useState<Stores>();
 
-  const onChangeStore = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedStore = event.target.value as Stores;
-    setStore(selectedStore);
-    onFilterChange({ store: selectedStore });
-  };
+  useEffect(() => {
+    makeRequest({ url: `/stores` }).then((response) => {
+      setStore(response.data);
+    });
+  }, []);
+
+  const handleChange = (Stores: any) => {
+    if (Stores != null) {
+      setStore(stores?.name);
+      setStore(stores?.id)
+    }
+    if (Stores == null) {
+      setStore('caso', [])
+      setStore(undefined);
+    }
+
+  }
 
   return (
     <div className="filter-container base-card">
       <div className="filter-input">
-
-        <select className="filter-input" value={String(stores)} onChange={onChangeStore}>
-          <option>Selecione a loja</option>
-          <option value="Araguari">Araguari</option>
-          <option value="Ituiutaba">Ituiutaba</option>
-          <option value="Uberaba">Uberaba</option>
-          <option value="Uberlândia">Uberlândia</option>
-        </select>
+        <Select
+          options={stores}
+          onChange={handleChange}
+          classNamePrefix="filter-input-select"
+          placeholder="Selecione a loja"
+          getOptionLabel={(category: Stores) => String(category.name)}
+          getOptionValue={(category: Stores) => String(category.id)}
+        />
       </div>
     </div>
   );
