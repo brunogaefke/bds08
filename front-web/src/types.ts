@@ -12,7 +12,7 @@ export type Stores = {
 
 export type FilterData = {
   gender?: Gender;
-  stores?: Stores;
+  store?: Stores;
 };
 
 export type PieChartConfig = {

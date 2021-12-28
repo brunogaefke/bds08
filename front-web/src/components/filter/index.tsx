@@ -1,7 +1,5 @@
-import { useEffect, useState } from 'react';
-import Select from 'react-select';
+import { useState } from 'react';
 import { FilterData, Stores } from '../../types';
-import { makeRequest } from '../../utils/request';
 import './styles.css';
 
 type Props = {
@@ -9,31 +7,24 @@ type Props = {
 };
 
 function Filter({ onFilterChange }: Props) {
-  const [store, setStore] = useState<Stores[]>([]);
+  const [stores, setStore] = useState<Stores[]>([]);
 
-  useEffect(() => {
-    makeRequest({ url: `/stores` }).then((response) => {
-      setStore(response.data);
-    });
-  }, []);
-
-  const onChangeStore = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedStore = event.target.value as Stores;
-    setStore(selectedStore);
-    onFilterChange({ stores: selectedStore });
+  const onChangeStore = (store: Stores[]) => {
+    setStore(store);
+    onFilterChange({ store });
   };
 
   return (
     <div className="filter-container base-card">
       <div className="filter-input">
-        <Select
-          options={store}
-          classNamePrefix="filter-input-select"
-          placeholder="Selecione a loja"
-          isMulti
-          getOptionLabel={(category: Stores) => String(category.name)}
-          getOptionValue={(category: Stores) => String(category.id)}
-        />
+
+        <select className="filter-input" value={String(stores)} onChange={onChangeStore}>
+          <option>Selecione a loja</option>
+          <option value="Araguari">Araguari</option>
+          <option value="Ituiutaba">Ituiutaba</option>
+          <option value="Uberaba">Uberaba</option>
+          <option value="Uberlândia">Uberlândia</option>
+        </select>
       </div>
     </div>
   );
