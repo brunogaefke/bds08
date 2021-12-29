@@ -4,7 +4,7 @@ import { FilterData } from '../types';
 const baseURL = 'http://localhost:8080';
 
 export const makeRequest = Axios.create({
-  baseURL
+  baseURL,
 });
 
 export const buildFilterParams = (
@@ -14,6 +14,6 @@ export const buildFilterParams = (
   return {
     store: filterData?.store,
     gender: filterData?.gender,
-    ...extraParams
+    ...extraParams,
   };
 };

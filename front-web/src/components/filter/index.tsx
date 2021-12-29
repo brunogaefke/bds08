@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import Select from 'react-select';
 import { FilterData, Stores } from '../../types';
 import { makeRequest } from '../../utils/request';
@@ -9,36 +10,43 @@ type Props = {
 };
 
 function Filter({ onFilterChange }: Props) {
-  const [stores, setStore] = useState<Stores>();
+  const [stores, setStore] = useState<Stores[]>([]);
+
+  const { setValue, getValues, control } = useForm<FilterData>();
+
+  const handleChangeStores = (value: Stores) => {
+    setValue('store', value);
+
+    const obj: FilterData = {
+      store: getValues('store')
+    };
+
+    onFilterChange(obj);
+  };
 
   useEffect(() => {
     makeRequest({ url: `/stores` }).then((response) => {
       setStore(response.data);
     });
-  }, []);
-
-  const handleChange = (Stores: any) => {
-    if (Stores != null) {
-      setStore(stores?.name);
-      setStore(stores?.id)
-    }
-    if (Stores == null) {
-      setStore('caso', [])
-      setStore(undefined);
-    }
-
-  }
+  }, [])
 
   return (
     <div className="filter-container base-card">
       <div className="filter-input">
-        <Select
-          options={stores}
-          onChange={handleChange}
-          classNamePrefix="filter-input-select"
-          placeholder="Selecione a loja"
-          getOptionLabel={(category: Stores) => String(category.name)}
-          getOptionValue={(category: Stores) => String(category.id)}
+        <Controller
+          name="store"
+          control={control}
+          render={({ field }) => (
+            <Select
+              {...field}
+              options={stores}
+              classNamePrefix="filter-input-select"
+              placeholder="Selecione a loja"
+              onChange={(value) => handleChangeStores(value as Stores)}
+              getOptionLabel={(category: Stores) => String(category.name)}
+              getOptionValue={(category: Stores) => String(category.id)}
+            />
+          )}
         />
       </div>
     </div>
