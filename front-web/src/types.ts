@@ -1,17 +1,16 @@
 export type Gender = 'MALE' | 'FEMALE' | 'OTHER';
 
 export type SalesByGender = {
-  gender: string;
+  gender: Gender;
   sum: number;
 };
 
 export type Stores = {
-  id?: number;
-  name?: string;
+  id: number;
+  name: string;
 };
 
 export type FilterData = {
-  gender?: Gender;
   store?: Stores;
 };
 

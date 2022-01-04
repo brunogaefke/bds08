@@ -1,34 +1,16 @@
-import { useEffect, useMemo, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
-import { FilterData, SalesByGender } from '../../types';
 import { formatPrice } from '../../utils/formatters';
-import { buildFilterParams, makeRequest } from '../../utils/request';
-import { buildPieChartConfig, sumSalesByGender } from './helpers';
+import { buildPieChartConfig } from './helpers';
 import './styles.css';
 
 type Props = {
   labels?: string[];
   name: string;
   series?: number[];
-  filterData?: FilterData;
+  totalSum: number;
 };
 
-function SalesByGenderComponent({ labels = [], name, series = [], filterData }: Props) {
-  const [totalSum, setTotalSum] = useState(0);
-
-  const params = useMemo(() => buildFilterParams(filterData), [filterData]);
-
-  useEffect(() => {
-    makeRequest
-      .get<SalesByGender[]>('/sales/by-gender?storeId=0', { params })
-      .then((response) => {
-        const newTotalSum = sumSalesByGender(response.data);
-        setTotalSum(newTotalSum);
-      })
-      .catch(() => {
-        console.error('Error to fetch sales by gender');
-      });
-  }, [params]);
+function SalesByGenderComponent({ labels = [], name, series = [], totalSum }: Props) {
 
   return (
     <div className="sales-by-gender-container base-card">

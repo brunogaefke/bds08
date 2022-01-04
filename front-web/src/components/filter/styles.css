@@ -9,20 +9,26 @@
 .filter-input {
   border-radius: 5px;
   padding-left: 5px;
-}
-
-.filter-input-select__control {
   height: 50px;
   width: 270px;
-  background-color: var(--primary-color);
 }
 
-.filter-input-select__placeholder {
+.store-select__indicator-separator {
+  display: none;
+}
+
+.store-select__placeholder {
+  color: var(--secondary-text-color) !important;
+  font-size: 16px;
+}
+
+.store-select__control--is-focused {
+  border: 1px solid #fff !important;
   color: var(--secondary-text-color) !important;
 }
 
-.filter-input-select__indicator-separator {
-  display: none !important;
+.store-select__single-value {
+  color: var(--secondary-text-colorcolor) !important;
 }
 
 @media (min-width: 576px) {

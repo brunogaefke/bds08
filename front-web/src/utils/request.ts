@@ -12,8 +12,7 @@ export const buildFilterParams = (
   extraParams?: Record<string, unknown>
 ) => {
   return {
-    store: filterData?.store,
-    gender: filterData?.gender,
+    storeId: filterData?.store?.id,
     ...extraParams,
   };
 };
